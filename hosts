@@ -1,0 +1,9 @@
+[masters]
+#master ansible_host=172.166.30.110 ansible_user=root
+172.166.30.110:22 ansible_ssh_user=root ansible_ssh_pass='password'
+
+[workers]
+#worker1 ansible_host=172.166.30.111 ansible_user=root
+172.166.30.111:22 ansible_ssh_user=root ansible_ssh_pass='password'
+
+

@@ -1,0 +1,34 @@
+- hosts: workers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+   - name: Copy join command from Ansiblehost to the worker nodes.
+     become: yes
+     copy:
+       src: /tmp/kubernetes_join_command
+       dest: /tmp/kubernetes_join_command
+       mode: 0777
+
+   - name: copy
+     copy:
+       src: /home/master/etc/kubernetes/admin.conf
+       dest: /etc/kubernetes/admin.conf
+       remote_src: false
+       mode: 0777
+
+   - name: iptables setting
+     shell: |
+             echo 1 > /proc/sys/net/bridge/bridge-nf-call-iptables
+             echo 1 > /proc/sys/net/bridge/bridge-nf-call-ip6tables
+
+   - name: Join the Worker nodes to the cluster.
+     become: yes
+     command: sh /tmp/kubernetes_join_command
+     register: joined_or_not
+
+   - name: soure admin.conf
+     shell: |
+             echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> ~/.bash_profile
+             source ~/.bash_profile
+             export KUBECONFIG=/etc/kubernetes/kubelet.conf
