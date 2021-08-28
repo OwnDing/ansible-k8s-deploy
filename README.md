@@ -17,12 +17,18 @@ mkdir k8s
 then copy hosts、install-k8s.yml、master.yml、join-workers.yml to /home/k8s .
 ```
 $ ansible -i hosts all -m ping
-masters | SUCCESS => {
-    "changed": false,
+172.166.30.110 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
     "ping": "pong"
 }
-workers | SUCCESS => {
-    "changed": false,
+172.166.30.111 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    }, 
+    "changed": false, 
     "ping": "pong"
 }
 ```
